@@ -1,0 +1,30 @@
+{
+  "name": "ai-search-web-crawler",
+  "version": "1.0.0",
+  "description": "Web crawler for AI-powered search engine",
+  "main": "web-crawler.js",
+  "scripts": {
+    "start": "node web-crawler.js",
+    "crawl": "node web-crawler.js",
+    "test": "node test-crawler.js"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.11.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "robots-parser": "^3.0.1",
+    "sitemap-stream-parser": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "keywords": [
+    "web-crawler",
+    "elasticsearch",
+    "search-engine",
+    "content-extraction",
+    "sitemap"
+  ],
+  "author": "AI Search Engine Team",
+  "license": "MIT"
+}

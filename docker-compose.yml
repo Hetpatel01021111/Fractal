@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  # Elasticsearch service
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: ai-search-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - ai-search-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: ai-search-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ai-search-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: builder
+    container_name: ai-search-backend
+    environment:
+      - NODE_ENV=development
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - REDIS_URL=redis://redis:6379
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - BACKEND_PORT=3001
+      - RATE_LIMIT_WINDOW_MS=900000
+      - RATE_LIMIT_MAX_REQUESTS=100
+    ports:
+      - "3001:3001"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/dist
+    networks:
+      - ai-search-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: ["npm", "run", "dev"]
+
+  # Frontend UI
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: builder
+    container_name: ai-search-frontend
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - NEXT_TELEMETRY_DISABLED=1
+    ports:
+      - "3002:3000"
+    depends_on:
+      - backend
+    networks:
+      - ai-search-network
+    volumes:
+      - ./frontend:/app/frontend
+    command: ["npm", "run", "start"]
+
+  # Data ingestion service (runs once to populate data)
+  data-ingestion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: scripts-builder
+    container_name: ai-search-ingestion
+    environment:
+      - NODE_ENV=production
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - ai-search-network
+    volumes:
+      - ./scripts:/app/scripts
+      - ./data:/app/data  # Mount data directory for ingestion
+    command: ["npm", "run", "ingest", "--", "--sample"]
+    profiles:
+      - ingestion  # Only run when specifically requested
+
+volumes:
+  elasticsearch_data:
+    driver: local
+
+networks:
+  ai-search-network:
+    driver: bridge

@@ -1,0 +1,23 @@
+{
+  "name": "ai-powered-search-engine",
+  "version": "1.0.0",
+  "description": "Full-stack AI-powered search engine with Next.js, Express, Elasticsearch, and Gemini API",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../scripts && npm install"
+  },
+  "keywords": ["search", "ai", "elasticsearch", "nextjs", "express", "gemini"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
