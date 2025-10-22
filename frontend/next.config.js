@@ -18,7 +18,6 @@ const nextConfig = {
   // Experimental features
   experimental: {
     forceSwcTransforms: true,
-    turbopack: false, // Explicitly disable Turbopack to use webpack
   },
   
   // Ensure proper module resolution
