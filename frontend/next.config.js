@@ -15,14 +15,13 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  // Disable static optimization for pages with Three.js
+  // Experimental features
   experimental: {
-    missingSuspenseWithCSRBailout: false,
     forceSwcTransforms: true,
   },
   
   // Ensure proper module resolution
-  transpilePackages: ['three'],
+  transpilePackages: [],
   
   // Enable static optimization
   trailingSlash: false,

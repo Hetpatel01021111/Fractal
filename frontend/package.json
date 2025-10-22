@@ -14,7 +14,6 @@
     "@elastic/elasticsearch": "^8.19.1",
     "@google/generative-ai": "^0.24.1",
     "@radix-ui/react-slot": "^1.2.3",
-    "@react-three/fiber": "^9.4.0",
     "@types/three": "^0.180.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
