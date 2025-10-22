@@ -130,7 +130,7 @@ export class MockAnalyticsService {
     // Daily trends
     const dailyStats = new Map<string, { count: number; totalLatency: number }>();
     filteredLogs.forEach(log => {
-      const date = new Date(log.timestamp).toISOString().split('T')[0];
+      const date: string = new Date(log.timestamp).toISOString().split('T')[0] || '';
       const existing = dailyStats.get(date) || { count: 0, totalLatency: 0 };
       dailyStats.set(date, {
         count: existing.count + 1,
@@ -263,7 +263,7 @@ export class MockAnalyticsService {
       timestamp.setHours(Math.floor(Math.random() * 24));
       timestamp.setMinutes(Math.floor(Math.random() * 60));
 
-      const query = sampleQueries[Math.floor(Math.random() * sampleQueries.length)];
+      const query: string = sampleQueries[Math.floor(Math.random() * sampleQueries.length)] ?? 'sample query';
       const success = Math.random() > 0.1; // 90% success rate
       const responseLatency = Math.floor(Math.random() * 5000) + 500; // 500-5500ms
       const resultsCount = success ? Math.floor(Math.random() * 50) + 1 : 0;
@@ -277,13 +277,16 @@ export class MockAnalyticsService {
         searchType: ['hybrid', 'bm25', 'vector'][Math.floor(Math.random() * 3)] as any,
         filters: Math.random() > 0.7 ? (() => {
           const category = categories[Math.floor(Math.random() * categories.length)];
-          const author = Math.random() > 0.5 ? authors[Math.floor(Math.random() * authors.length)] : undefined;
-          return author ? { category, author } : { category };
-        })() : undefined,
+          const authorMaybe = Math.random() > 0.5 ? authors[Math.floor(Math.random() * authors.length)] : undefined;
+          const filtersObj: { category?: string; author?: string; dateRange?: { from: string; to: string } } = {};
+          if (category) filtersObj.category = category;
+          if (authorMaybe) filtersObj.author = authorMaybe;
+          return filtersObj;
+        })() : {},
         userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
         ipAddress: `192.168.1.${Math.floor(Math.random() * 255)}`,
         success,
-        errorMessage: success ? undefined : 'Search timeout',
+        errorMessage: success ? '' : (Math.random() > 0.5 ? 'TimeoutError' : 'ServerError'),
         searchInfo: {
           bm25Results: Math.floor(Math.random() * 20),
           vectorResults: Math.floor(Math.random() * 15),

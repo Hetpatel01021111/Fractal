@@ -429,8 +429,8 @@ export async function GET(request: NextRequest) {
           query,
           results.length,
           responseTime,
-          'google_search_api',
-          { searchSource, googleConfigured: googleSearch.isConfigured() }
+          request.headers.get('user-agent') || undefined,
+          request.headers.get('x-forwarded-for') || undefined
         );
       }
     } catch (error) {

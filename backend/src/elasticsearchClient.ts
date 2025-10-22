@@ -119,43 +119,43 @@ export class ElasticsearchClient {
       console.error('❌ Failed to initialize Elasticsearch:', error);
       throw error;
     }
+  }
   /**
    * Create index with proper mappings for text, metadata, and vector fields
    */
   async createIndex(): Promise<void> {
+    const indexConfig = {
+      index: this.indexName,
+      body: {
+        settings: {
+          number_of_shards: 1,
+          number_of_replicas: 0,
+        },
+        mappings: {
+          properties: {
+            title: {
+              type: 'text',
+              fields: { keyword: { type: 'keyword' } },
             },
+            content: { type: 'text' },
+            url: { type: 'keyword' },
             timestamp: {
               type: 'date',
               format: 'strict_date_optional_time||epoch_millis',
             },
-            
-            // Metadata fields
-            'metadata.author': {
-              type: 'keyword',
-            },
+            'metadata.author': { type: 'keyword' },
             'metadata.date': {
               type: 'date',
               format: 'strict_date_optional_time||yyyy-MM-dd||epoch_millis',
             },
-            'metadata.category': {
-              type: 'keyword',
-            },
-            'metadata.tags': {
-              type: 'keyword',
-            },
-            'metadata.source': {
-              type: 'keyword',
-            },
-            'metadata.language': {
-              type: 'keyword',
-            },
-            
+            'metadata.category': { type: 'keyword' },
+            'metadata.tags': { type: 'keyword' },
+            'metadata.source': { type: 'keyword' },
+            'metadata.language': { type: 'keyword' },
             // Dense vector field for semantic search (Gemini embeddings)
             embedding: {
               type: 'dense_vector',
-              dims: 768, // Gemini embedding dimension
-              index: true,
-              similarity: 'cosine',
+              dims: 768,
             },
           },
         },

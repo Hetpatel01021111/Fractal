@@ -82,45 +82,42 @@ app.use('*', (req, res) => {
 
 // Start server
 const startServer = async () => {
+  // Initialize Elasticsearch client with graceful fallback
   try {
-    // Initialize Elasticsearch client
     elasticsearchClient = new ElasticsearchClient();
-    
-    // Initialize Elasticsearch connection
     await elasticsearchClient.initialize();
     console.log('✅ Elasticsearch connected successfully');
-    
-    // Update app.locals with initialized client
     app.locals.elasticsearchClient = elasticsearchClient;
-
-    // Initialize Gemini service
-    await geminiService.initialize();
-    console.log('✅ Gemini AI service initialized');
-
-    // Initialize Analytics service if available
-    if (analyticsService) {
-      try {
-        await analyticsService.initialize();
-        console.log('✅ Analytics service initialized');
-      } catch (error) {
-        console.warn('⚠️ Analytics service initialization failed:', error);
-        console.log('📊 Analytics will use mock data for demonstration');
-        analyticsService = null;
-        app.locals.analyticsService = null;
-      }
-    } else {
-      console.log('📊 Using mock analytics data for demonstration');
-    }
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`📈 Analytics: ${analyticsService ? 'Enabled' : 'Disabled'}`);
-    });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
-    process.exit(1);
+    console.warn('⚠️ Elasticsearch unavailable; starting with limited functionality:', error instanceof Error ? error.message : error);
+    elasticsearchClient = null;
+    app.locals.elasticsearchClient = null;
   }
+
+  // Initialize Gemini service
+  await geminiService.initialize();
+  console.log('✅ Gemini AI service initialized');
+
+  // Initialize Analytics service if available
+  if (analyticsService) {
+    try {
+      await analyticsService.initialize();
+      console.log('✅ Analytics service initialized');
+    } catch (error) {
+      console.warn('⚠️ Analytics service initialization failed:', error);
+      console.log('📊 Analytics will use mock data for demonstration');
+      analyticsService = null;
+      app.locals.analyticsService = null;
+    }
+  } else {
+    console.log('📊 Using mock analytics data for demonstration');
+  }
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`📈 Analytics: ${analyticsService ? 'Enabled' : 'Disabled'}`);
+  });
 };
 
 // Graceful shutdown

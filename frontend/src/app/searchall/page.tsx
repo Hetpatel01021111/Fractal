@@ -1,6 +1,6 @@
 "use client";
 
-// Removed framer-motion to fix Vercel HTML import error
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronLeft, ChevronRight, Loader2, AlertCircle } from "lucide-react";
