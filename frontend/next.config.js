@@ -18,7 +18,11 @@ const nextConfig = {
   // Disable static optimization for pages with Three.js
   experimental: {
     missingSuspenseWithCSRBailout: false,
+    forceSwcTransforms: true,
   },
+  
+  // Ensure proper module resolution
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', 'framer-motion'],
   
   // Enable static optimization
   trailingSlash: false,

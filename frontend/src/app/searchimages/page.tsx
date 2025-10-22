@@ -8,16 +8,7 @@ import { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ImageCard } from "@/components/ImageCard";
 import { AnimatedLoading } from "@/components/ui/animated-loading";
-import dynamic from "next/dynamic";
-
-// Dynamic import for Three.js component to avoid SSR issues
-const StaticShaderBackground = dynamic(
-  () => import("@/components/ui/static-shader-background").then(mod => ({ default: mod.StaticShaderBackground })),
-  { 
-    ssr: false,
-    loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />
-  }
-);
+import { SafeShaderBackground } from "@/components/SafeShaderBackground";
 
 function SearchImagesContent() {
   const router = useRouter();
@@ -131,7 +122,7 @@ function SearchImagesContent() {
     <div className="min-h-screen relative">
       {/* Static Shader Background - Extended to cover all content */}
       <div className="fixed inset-0 w-full h-full">
-        <StaticShaderBackground />
+        <SafeShaderBackground />
       </div>
       
       {/* Professional overlay - Extended to cover all content */}

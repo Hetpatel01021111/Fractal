@@ -7,16 +7,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-
-// Dynamic import for Three.js component to avoid SSR issues
-const InteractiveShaderAnimation = dynamic(
-  () => import("@/components/ui/interactive-shader-animation").then(mod => ({ default: mod.InteractiveShaderAnimation })),
-  { 
-    ssr: false,
-    loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />
-  }
-);
+import { SafeInteractiveShader } from "@/components/SafeInteractiveShader";
 
 export default function FractalSearch() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,7 +29,7 @@ export default function FractalSearch() {
     <div className="min-h-screen relative overflow-hidden">
       {/* Interactive Shader Animation Background */}
       <div className="absolute inset-0">
-        <InteractiveShaderAnimation />
+        <SafeInteractiveShader />
       </div>
       
       {/* Professional overlay */}
