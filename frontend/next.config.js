@@ -18,6 +18,7 @@ const nextConfig = {
   // Experimental features
   experimental: {
     forceSwcTransforms: true,
+    workspaceRoot: __dirname,
   },
   
   // Ensure proper module resolution
