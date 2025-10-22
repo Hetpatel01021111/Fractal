@@ -47,7 +47,7 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
   
-  // Webpack configuration for Three.js
+  // Webpack configuration
   webpack: (config, { isServer }) => {
     // Handle Three.js in client-side builds
     if (!isServer) {
@@ -58,6 +58,13 @@ const nextConfig = {
         crypto: false,
       };
     }
+    
+    // Exclude problematic framer-motion HTML components
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'framer-motion/dist/es/render/components/motion/elements': false,
+      'framer-motion/dist/es/render/components/m/elements': false,
+    };
     
     return config;
   },

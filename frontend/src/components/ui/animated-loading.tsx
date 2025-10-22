@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+// Removed framer-motion to fix Vercel HTML import error
 import * as THREE from "three"
 
 interface AnimatedLoadingProps {

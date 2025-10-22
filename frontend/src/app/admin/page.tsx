@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+// Removed framer-motion to fix Vercel HTML import error
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -151,18 +151,14 @@ export default function AdminPage() {
     <div className="min-h-screen bg-black text-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+        <div className="mb-8 animate-fade-in-up">
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Fractal Search Admin
           </h1>
           <p className="text-gray-400">
             Scrape, index, and manage your AI-powered search engine
           </p>
-        </motion.div>
+        </div>
 
         {/* Navigation Tabs */}
         <div className="flex space-x-4 mb-8">
@@ -185,11 +181,7 @@ export default function AdminPage() {
 
         {/* Scraping Tab */}
         {activeTab === 'scrape' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6 animate-fade-in">
             {/* Scraping Form */}
             <Card className="bg-gray-900 border-gray-700">
               <CardHeader>
@@ -297,16 +289,12 @@ export default function AdminPage() {
                 </CardContent>
               </Card>
             )}
-          </motion.div>
+          </div>
         )}
 
         {/* Index Management Tab */}
         {activeTab === 'index' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6 animate-fade-in">
             {indexStats && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Stats Cards */}
@@ -371,16 +359,12 @@ export default function AdminPage() {
                 </Card>
               </div>
             )}
-          </motion.div>
+          </div>
         )}
 
         {/* Testing Tab */}
         {activeTab === 'test' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6 animate-fade-in">
             <Card className="bg-gray-900 border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -441,7 +425,7 @@ export default function AdminPage() {
                 )}
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>

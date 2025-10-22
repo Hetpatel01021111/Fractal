@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+// Removed framer-motion to fix Vercel HTML import error
 import { Card, CardContent } from "@/components/ui/card";
 import { WobbleCard } from "@/components/ui/wobble-card";
 import { ExternalLink, Download, Heart } from "lucide-react";

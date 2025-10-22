@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+// Removed framer-motion to fix Vercel HTML import error
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -37,36 +37,17 @@ export default function FractalSearch() {
       
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Brand */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-8"
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl"
-          >
+        <div className="text-center mb-8 animate-fade-in-up">
+          <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight drop-shadow-2xl animate-fade-in-up-delay">
             Fractal
-          </motion.h1>
-        </motion.div>
+          </h1>
+        </div>
 
         {/* Search Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full max-w-2xl"
-        >
+        <div className="w-full max-w-2xl animate-fade-in-up-delay-2">
           <div className="relative">
             {/* Search Input */}
-            <motion.div
-              whileFocus={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-              className="relative mb-4"
-            >
+            <div className="relative mb-4 hover:scale-105 transition-transform duration-200">
               <Input
                 type="text"
                 placeholder="Search the web..."
@@ -75,7 +56,7 @@ export default function FractalSearch() {
                 onKeyPress={handleKeyPress}
                 className="w-full h-16 px-6 pr-20 text-lg bg-black/40 border-white/20 text-white placeholder:text-white/60 focus:border-white/60 focus:ring-2 focus:ring-white/20 rounded-full backdrop-blur-md transition-all duration-300 shadow-2xl"
               />
-            </motion.div>
+            </div>
               
             {/* Search Button */}
             <div className="flex items-center justify-center gap-4">
@@ -100,49 +81,31 @@ export default function FractalSearch() {
             </div>
 
             {/* Search Suggestions */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-6 flex flex-wrap justify-center gap-3"
-            >
+            <div className="mt-6 flex flex-wrap justify-center gap-3 animate-fade-in-up-delay-3">
               {["AI & Machine Learning", "Web Development", "Design Patterns", "Quantum Computing"].map((suggestion, index) => (
-                <motion.button
+                <button
                   key={suggestion}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 1.0 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.1)" }}
-                  whileTap={{ scale: 0.95 }}
+                  className="hover:scale-105 active:scale-95 transition-transform duration-200"
                   onClick={() => {
                     setSearchQuery(suggestion);
                     setTimeout(() => {
                       router.push(`/searchall?q=${encodeURIComponent(suggestion)}`);
                     }, 100);
                   }}
-                  className="px-4 py-2 bg-white/10 border border-white/30 text-white rounded-full text-sm hover:border-white/60 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
+                  className="px-4 py-2 bg-white/10 border border-white/30 text-white rounded-full text-sm hover:border-white/60 hover:bg-white/20 hover:bg-blue-500/10 transition-all duration-300 backdrop-blur-sm"
                 >
                   {suggestion}
-                </motion.button>
+                </button>
               ))}
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
-        >
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center animate-fade-in-delay-4">
           <div className="flex items-center justify-center gap-2 text-white/60">
             <span className="text-sm">Powered by</span>
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-2"
-            >
+            <div className="flex items-center gap-2 hover:scale-110 transition-transform duration-200">
               <Image
                 src="/gemini-removebg-preview.png"
                 alt="Gemini Logo"
@@ -151,9 +114,9 @@ export default function FractalSearch() {
                 className="w-5 h-5"
               />
               <span className="text-sm font-medium text-white">Gemini AI</span>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </div>
