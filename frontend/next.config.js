@@ -14,6 +14,11 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  // Disable static optimization for pages with Three.js
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   
   // Enable static optimization
   trailingSlash: false,

@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 
 // Dynamic import for Three.js component to avoid SSR issues
 const StaticShaderBackground = dynamic(
-  () => import("@/components/ui/static-shader-background").then(mod => mod.StaticShaderBackground),
+  () => import("@/components/ui/static-shader-background").then(mod => ({ default: mod.StaticShaderBackground })),
   { 
     ssr: false,
     loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />

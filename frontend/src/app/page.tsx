@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 
 // Dynamic import for Three.js component to avoid SSR issues
 const InteractiveShaderAnimation = dynamic(
-  () => import("@/components/ui/interactive-shader-animation").then(mod => mod.InteractiveShaderAnimation),
+  () => import("@/components/ui/interactive-shader-animation").then(mod => ({ default: mod.InteractiveShaderAnimation })),
   { 
     ssr: false,
     loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />
