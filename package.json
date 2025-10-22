@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cd frontend && npm run dev",
-    "build": "npx next build",
+    "build": "cd frontend && npm run build",
     "start": "cd frontend && npm run start",
     "deploy": "./deploy-vercel.sh",
     "install-all": "cd frontend && npm install && cd ../api && npm install",
