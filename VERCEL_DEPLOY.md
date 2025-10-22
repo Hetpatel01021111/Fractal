@@ -18,7 +18,7 @@ Before deploying, make sure you have:
 
 ### Option 1: One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/fractal-search-engine&project-name=fractal-search-engine&repository-name=fractal-search-engine&root-directory=frontend)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Hetpatel01021111/Fractal&project-name=fractal-search-engine&repository-name=fractal-search-engine&root-directory=frontend)
 
 ### Option 2: Deploy Script
 
