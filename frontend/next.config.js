@@ -21,6 +21,9 @@ const nextConfig = {
     workspaceRoot: __dirname,
   },
   
+  // Explicitly disable static export
+  output: 'standalone',
+  
   // Ensure proper module resolution
   transpilePackages: [],
   
