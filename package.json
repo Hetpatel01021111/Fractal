@@ -1,23 +1,41 @@
 {
-  "name": "ai-powered-search-engine",
+  "name": "fractal-search-engine",
   "version": "1.0.0",
-  "description": "Full-stack AI-powered search engine with Next.js, Express, Elasticsearch, and Gemini API",
+  "description": "Beautiful AI-powered search engine with stunning animations",
+  "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm run dev",
-    "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && npm run build",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd backend && npm start",
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ../scripts && npm install"
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm run start",
+    "deploy": "./deploy-vercel.sh",
+    "install-all": "cd frontend && npm install && cd ../api && npm install",
+    "type-check": "cd frontend && npm run type-check",
+    "lint": "cd frontend && npm run lint"
   },
-  "keywords": ["search", "ai", "elasticsearch", "nextjs", "express", "gemini"],
-  "author": "",
+  "keywords": [
+    "ai",
+    "search",
+    "nextjs",
+    "vercel",
+    "threejs",
+    "animations",
+    "fractal",
+    "typescript"
+  ],
+  "author": "Fractal Search Team",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "your-repo-url"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^9.1.1"
   }
 }

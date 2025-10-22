@@ -182,6 +182,49 @@ Enhanced query:`;
     }
   }
 
+  async generateWebsiteDescription(title: string, url: string, existingContent?: string): Promise<string> {
+    try {
+      const prompt = `
+Generate a short, descriptive summary (1-2 sentences, max 120 characters) for this website:
+
+Title: "${title}"
+URL: "${url}"
+${existingContent ? `Content: "${existingContent.substring(0, 200)}..."` : ''}
+
+The description should:
+1. Be concise and informative
+2. Explain what the website/page is about
+3. Use clear, professional language
+4. Be under 120 characters
+5. Not include the website name (it's already in the title)
+
+Return only the description, no additional text or formatting.
+`;
+
+      const result = await this.textModel.generateContent(prompt);
+      const response = await result.response;
+      const description = response.text().trim();
+
+      // Clean up the description
+      const cleanDescription = description
+        .replace(/['"]/g, '') // Remove quotes
+        .replace(/^Description:\s*/i, '') // Remove "Description:" prefix
+        .replace(/\n/g, ' ') // Replace newlines with spaces
+        .trim();
+
+      // Ensure it's not too long
+      if (cleanDescription.length > 120) {
+        return cleanDescription.substring(0, 117) + '...';
+      }
+
+      return cleanDescription || 'Informative website with valuable content and resources.';
+    } catch (error) {
+      console.error('Failed to generate website description:', error);
+      // Return a generic fallback description
+      return 'Discover valuable information and resources on this website.';
+    }
+  }
+
   async analyzeSearchIntent(query: string): Promise<{
     intent: 'informational' | 'navigational' | 'transactional' | 'commercial';
     confidence: number;

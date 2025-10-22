@@ -134,40 +134,52 @@ docker-compose down -v
 
 ## 🌐 Frontend Deployment
 
-### Vercel Deployment
+### Vercel Deployment (Recommended)
 
-Vercel is the recommended platform for Next.js applications.
+Vercel is the recommended platform for this Next.js application with built-in API routes.
 
-#### Automatic Deployment
+#### Quick Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/ai-search-engine&project-name=fractal-search-engine&repository-name=fractal-search-engine)
+
+#### Manual Deployment
 
 1. **Connect Repository:**
    - Go to [Vercel Dashboard](https://vercel.com/dashboard)
    - Click "New Project"
    - Import your Git repository
-   - Select the `frontend` folder as the root directory
+   - **Important:** Select the `frontend` folder as the root directory
 
 2. **Configure Build Settings:**
    ```bash
-   # Build Command
-   npm run build
-   
-   # Output Directory
-   .next
-   
-   # Install Command
-   npm install
-   
-   # Root Directory
-   frontend
+   # Framework Preset: Next.js
+   # Build Command: npm run build
+   # Output Directory: .next
+   # Install Command: npm install
+   # Root Directory: frontend
    ```
 
 3. **Environment Variables:**
-   Add these in Vercel dashboard:
+   Add these in Vercel dashboard under Settings → Environment Variables:
    ```bash
-   NEXT_PUBLIC_API_URL=https://your-backend-url.com
-   NEXT_PUBLIC_APP_NAME=AI Search Engine
-   NEXT_PUBLIC_ENABLE_VOICE_SEARCH=true
+   # Required API Keys
+   GOOGLE_API_KEY=your_google_custom_search_api_key
+   GOOGLE_CX_ID=your_custom_search_engine_id
+   GEMINI_API_KEY=your_gemini_api_key
+   
+   # Optional Elasticsearch (for enhanced search)
+   ELASTICSEARCH_URL=https://your-elasticsearch-cloud-url.com:443
+   ELASTICSEARCH_API_KEY=your_elasticsearch_api_key
+   
+   # App Configuration
+   NEXT_PUBLIC_APP_NAME=Fractal Search Engine
+   NODE_ENV=production
    ```
+
+4. **Deploy:**
+   - Click "Deploy"
+   - Vercel will automatically build and deploy your application
+   - Your app will be available at `https://your-project-name.vercel.app`
 
 #### Manual Deployment
 

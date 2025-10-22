@@ -41,10 +41,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Initialize services
-const elasticsearchClient = new ElasticsearchClient();
-const geminiService = new GeminiService();
-
-// Analytics service (will use mock data in API routes if Elasticsearch unavailable)
+let elasticsearchClient: ElasticsearchClient | null = null;
+let geminiService: GeminiService;
 let analyticsService: AnalyticsService | null = null;
 try {
   const analyticsClient = new Client({
@@ -55,8 +53,11 @@ try {
   console.warn('⚠️ Analytics service will use mock data (Elasticsearch not available)');
 }
 
-// Make services available to routes
-app.locals.elasticsearchClient = elasticsearchClient;
+// Initialize Gemini service
+geminiService = new GeminiService();
+
+// Make services available to routes (will be set properly in startServer)
+app.locals.elasticsearchClient = null;
 app.locals.geminiService = geminiService;
 app.locals.analyticsService = analyticsService;
 
@@ -82,9 +83,15 @@ app.use('*', (req, res) => {
 // Start server
 const startServer = async () => {
   try {
+    // Initialize Elasticsearch client
+    elasticsearchClient = new ElasticsearchClient();
+    
     // Initialize Elasticsearch connection
     await elasticsearchClient.initialize();
     console.log('✅ Elasticsearch connected successfully');
+    
+    // Update app.locals with initialized client
+    app.locals.elasticsearchClient = elasticsearchClient;
 
     // Initialize Gemini service
     await geminiService.initialize();
@@ -119,13 +126,13 @@ const startServer = async () => {
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   console.log('🔄 SIGTERM received, shutting down gracefully');
-  await elasticsearchClient.close();
+  // Note: ElasticsearchClient doesn't have a close method, connection will close automatically
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
   console.log('🔄 SIGINT received, shutting down gracefully');
-  await elasticsearchClient.close();
+  // Note: ElasticsearchClient doesn't have a close method, connection will close automatically
   process.exit(0);
 });
 

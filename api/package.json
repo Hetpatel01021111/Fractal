@@ -1,0 +1,19 @@
+{
+  "name": "fractal-search-api",
+  "version": "1.0.0",
+  "description": "Vercel API functions for Fractal Search Engine",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
