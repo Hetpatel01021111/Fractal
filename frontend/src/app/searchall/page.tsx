@@ -8,8 +8,17 @@ import { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SearchResultCard } from "@/components/SearchResultCard";
 // Removed old API imports - now using direct fetch to bulk search API
-import { StaticShaderBackground } from "@/components/ui/static-shader-background";
 import { AnimatedLoading } from "@/components/ui/animated-loading";
+import dynamic from "next/dynamic";
+
+// Dynamic import for Three.js component to avoid SSR issues
+const StaticShaderBackground = dynamic(
+  () => import("@/components/ui/static-shader-background").then(mod => mod.StaticShaderBackground),
+  { 
+    ssr: false,
+    loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />
+  }
+);
 
 function SearchAllContent() {
   const router = useRouter();

@@ -7,8 +7,17 @@ import { Search, Loader2, AlertCircle } from "lucide-react";
 import { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { VideoCard } from "@/components/VideoCard";
-import { StaticShaderBackground } from "@/components/ui/static-shader-background";
 import { AnimatedLoading } from "@/components/ui/animated-loading";
+import dynamic from "next/dynamic";
+
+// Dynamic import for Three.js component to avoid SSR issues
+const StaticShaderBackground = dynamic(
+  () => import("@/components/ui/static-shader-background").then(mod => mod.StaticShaderBackground),
+  { 
+    ssr: false,
+    loading: () => <div className="fixed inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900" />
+  }
+);
 
 function SearchVideosContent() {
   const router = useRouter();
