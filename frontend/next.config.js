@@ -21,14 +21,14 @@ const nextConfig = {
     workspaceRoot: __dirname,
   },
   
-  // Explicitly disable static export
-  output: 'standalone',
-  
   // Ensure proper module resolution
   transpilePackages: [],
   
   // Enable static optimization
   trailingSlash: false,
+  
+  // Explicitly disable static export; use standalone server output
+  output: 'standalone',
   
   // Image optimization for external sources
   images: {
