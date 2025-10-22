@@ -1,0 +1,50 @@
+name: Build and Publish Frontend Image
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/ai-accelerate-frontend:latest
+            ghcr.io/${{ github.repository_owner }}/ai-accelerate-frontend:${{ github.sha }}
+          build-args: |
+            NEXT_PUBLIC_APP_NAME=${{ secrets.NEXT_PUBLIC_APP_NAME }}
+            GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
+            GOOGLE_CX_ID=${{ secrets.GOOGLE_CX_ID }}
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            ELASTICSEARCH_URL=${{ secrets.ELASTICSEARCH_URL }}
+            ELASTICSEARCH_API_KEY=${{ secrets.ELASTICSEARCH_API_KEY }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ai-accelerate-frontend:cache
+          cache-to: type=registry,mode=max,ref=ghcr.io/${{ github.repository_owner }}/ai-accelerate-frontend:cache
