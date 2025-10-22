@@ -29,6 +29,9 @@ const nextConfig = {
   // Explicitly disable static export; use standalone server output
   output: 'standalone',
   
+  // Fix workspace root warning
+  outputFileTracingRoot: __dirname,
+  
   // Image optimization for external sources
   images: {
     domains: [
