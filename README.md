@@ -1,4 +1,4 @@
-# AI-Powered Search Engine
+# Fractal - AI-Powered Search Engine
 
 A full-stack intelligent search engine that combines traditional text search with AI-powered semantic understanding, built with Next.js, Express.js, Elasticsearch, and Google's Gemini API.
 
@@ -457,4 +457,3 @@ npm install
 ---
 
 **Built with ❤️ using Next.js, Express.js, Elasticsearch, and Google Gemini AI**
-# Fractal
