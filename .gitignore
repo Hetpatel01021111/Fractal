@@ -115,6 +115,7 @@ frontend_backup/
 # Docker
 .dockerignore
 Dockerfile
+!frontend/Dockerfile
 
 # Vercel
 .vercel
