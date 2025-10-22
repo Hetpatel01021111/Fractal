@@ -22,7 +22,7 @@ const nextConfig = {
   },
   
   // Ensure proper module resolution
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', 'framer-motion'],
+  transpilePackages: ['three'],
   
   // Enable static optimization
   trailingSlash: false,
