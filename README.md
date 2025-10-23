@@ -13,7 +13,7 @@
 [![Google Gemini](https://img.shields.io/badge/Google-Gemini%20AI-4285F4?style=flat-square&logo=google)](https://ai.google.dev/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel)](https://vercel.com/)
 
-[🚀 Live Demo](https://your-vercel-deployment.vercel.app) • [📖 Documentation](#-documentation) • [🛠️ Setup](#-quick-start) • [🤝 Contributing](#-contributing)
+[🚀 Live Demo](https://fractal-flame-six.vercel.app/) • [📖 Documentation](#-documentation) • [🛠️ Setup](#-quick-start) • [🤝 Contributing](#-contributing)
 
 </div>
 
@@ -288,31 +288,49 @@ POST /api/admin/ingest
 
 Fractal uses a sophisticated **Hybrid AI Ranking System** that combines multiple algorithms to deliver the most relevant results. Here's how it works:
 
-#### **🔬 Three-Layer Ranking Architecture**
+#### **🔬 AI-Powered Ranking Architecture**
 
 ```mermaid
 graph TB
-    A[User Query] --> B[Query Enhancement]
-    B --> C[Parallel Search Execution]
+    A[User Query] --> B[Gemini Pro Query Enhancement]
+    B --> C[Enhanced Query]
+    C --> D[Parallel Search Execution]
     
-    C --> D[BM25 Text Search]
-    C --> E[Vector Semantic Search]
+    D --> E[BM25 Text Search<br/>Elasticsearch]
+    D --> F[Vector Semantic Search<br/>Gemini Embeddings]
     
-    D --> F[BM25 Scores]
-    E --> G[Vector Similarity Scores]
+    F --> G[Gemini Embedding-001<br/>768D Vector Generation]
+    G --> H[Cosine Similarity Scoring]
     
-    F --> H[Reciprocal Rank Fusion]
-    G --> H
+    E --> I[BM25 Relevance Scores]
+    H --> J[Semantic Similarity Scores]
     
-    H --> I[Final Ranked Results]
+    I --> K[Reciprocal Rank Fusion<br/>RRF Algorithm]
+    J --> K
     
-    subgraph "AI Models Used"
-        J[Google Gemini Pro]
-        K[Gemini Embedding-001]
+    K --> L[Gemini Pro Result Analysis]
+    L --> M[Final AI-Ranked Results]
+    
+    subgraph "🧠 Google Gemini AI Models"
+        N[Gemini Pro<br/>Query Enhancement & Analysis]
+        O[Gemini Embedding-001<br/>Vector Generation & Ranking]
     end
     
-    B -.-> J
-    E -.-> K
+    B -.-> N
+    G -.-> O
+    L -.-> N
+    
+    subgraph "🔍 Search Infrastructure"
+        P[Elasticsearch BM25]
+        Q[Vector Database]
+    end
+    
+    E -.-> P
+    F -.-> Q
+    
+    style N fill:#4285f4,stroke:#333,stroke-width:2px,color:#fff
+    style O fill:#34a853,stroke:#333,stroke-width:2px,color:#fff
+    style K fill:#ea4335,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 #### **1️⃣ Query Enhancement (Gemini Pro)**
@@ -376,9 +394,9 @@ cosine_sim = (A · B) / (||A|| × ||B||)
 // Result range: 1.0 to 2.0 (shifted for positive scores)
 ```
 
-#### **3️⃣ Reciprocal Rank Fusion (RRF)**
+#### **3️⃣ Reciprocal Rank Fusion (RRF) with AI Analysis**
 
-The magic happens when we combine both search results using **RRF Algorithm**:
+The magic happens when we combine both search results using **RRF Algorithm** enhanced by **Gemini Pro analysis**:
 
 ```typescript
 // RRF Formula for each document
@@ -412,6 +430,65 @@ Vector_RRF = 0.3 × (1 / (60 + 1)) = 0.3 × 0.0164 = 0.0049
 Final_Score = 0.0111 + 0.0049 = 0.0160
 
 // This document ranks higher because it appears in both result sets!
+```
+
+#### **🤖 Gemini AI Models in Ranking Process**
+
+Fractal uses **two specialized Gemini models** at different stages of ranking:
+
+##### **1. Gemini Pro - Query Intelligence & Result Analysis**
+```typescript
+// Stage 1: Query Enhancement
+const enhancedQuery = await geminiPro.enhanceQuery(userQuery);
+// "AI" → "artificial intelligence machine learning neural networks"
+
+// Stage 2: Result Analysis (Post-RRF)
+const analyzedResults = await geminiPro.analyzeResults(rrfResults, query);
+// Adds context-aware ranking adjustments
+```
+
+**What Gemini Pro Does:**
+- 🔍 **Query Expansion**: Adds synonyms, related terms, context
+- 🎯 **Intent Analysis**: Understands user's search intent (informational/navigational/transactional)
+- 📊 **Result Validation**: Analyzes if RRF results match query intent
+- 🧠 **Context Enhancement**: Improves query understanding with domain knowledge
+
+##### **2. Gemini Embedding-001 - Semantic Vector Ranking**
+```typescript
+// Vector Generation for Semantic Search
+const queryEmbedding = await geminEmbedding.generateEmbedding(enhancedQuery);
+// Creates 768-dimensional vector representing query meaning
+
+const documentEmbeddings = await geminiEmbedding.batchEmbeddings(documents);
+// Generates semantic vectors for all indexed documents
+
+// Semantic Similarity Calculation
+const semanticScores = documents.map(doc => 
+  cosineSimilarity(queryEmbedding, doc.embedding)
+);
+```
+
+**What Gemini Embedding-001 Does:**
+- 🧬 **Semantic Vectors**: Converts text to 768D mathematical representations
+- 🎭 **Context Understanding**: Captures meaning beyond keywords
+- 🔗 **Relationship Mapping**: Finds conceptually related content
+- 📐 **Similarity Scoring**: Calculates semantic distance between query and documents
+
+##### **🔄 Complete AI-Enhanced Ranking Flow**
+```typescript
+// 1. AI Query Enhancement
+userQuery: "ML algorithms"
+geminiEnhanced: "machine learning algorithms artificial intelligence neural networks classification regression"
+
+// 2. Parallel Search with AI
+bm25Search(geminiEnhanced) → keywordScores[]
+vectorSearch(geminiEmbedding(geminiEnhanced)) → semanticScores[]
+
+// 3. AI-Weighted RRF Fusion
+rrfScores = combineWithWeights(keywordScores, semanticScores)
+
+// 4. Final AI Analysis
+finalResults = geminiPro.analyzeAndRank(rrfScores, originalQuery)
 ```
 
 #### **🎯 Real-World Example**
