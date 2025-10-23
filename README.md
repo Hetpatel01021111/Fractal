@@ -794,24 +794,9 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - 🌊 **Framer Motion** - For smooth animations
 - 🎯 **Three.js** - For stunning 3D graphics
 
----
-
-## 📞 Support & Community
-
-- 📧 **Email**: support@fractal-search.com
-- 💬 **Discord**: [Join our community](https://discord.gg/fractal-search)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-username/fractal-search-engine/issues)
-- 📖 **Docs**: [Full Documentation](https://docs.fractal-search.com)
-
----
-
 <div align="center">
 
 **Built with ❤️ by the Fractal Team**
 
 ⭐ **Star us on GitHub** if you find this project useful!
-
-[![GitHub stars](https://img.shields.io/github/stars/your-username/fractal-search-engine?style=social)](https://github.com/your-username/fractal-search-engine)
-[![Twitter Follow](https://img.shields.io/twitter/follow/fractal_search?style=social)](https://twitter.com/fractal_search)
-
 </div>
