@@ -229,9 +229,8 @@ NEXT_PUBLIC_API_URL=https://your-backend-url
 
 ### **🏠 Homepage**
 - Stunning fractal shader animations
-- Smooth search interface with real-time suggestions
+- Smooth search interface
 - Responsive design with beautiful typography
-- Quick access to admin panel
 
 ### **🔍 Search Results**
 - AI-powered semantic search results
@@ -583,7 +582,7 @@ POST /api/search/hybrid
 #### **📈 Performance Metrics**
 
 Our ranking system delivers:
-- **Relevance**: 95%+ user satisfaction on result quality
+- **Relevance**: 95%+ satisfaction on result quality
 - **Speed**: < 200ms average response time
 - **Coverage**: Hybrid approach catches 40% more relevant results
 - **Precision**: 15% improvement over traditional keyword search
@@ -648,7 +647,6 @@ docker-compose up -d --scale backend=3
 - ⚡ **Search Speed**: < 200ms average response time
 - 🎯 **Accuracy**: 95%+ relevant results with AI enhancement
 - 📱 **Mobile Score**: 98/100 (Google PageSpeed)
-- 🔄 **Uptime**: 99.9% availability
 
 ### **Monitoring Tools**
 - Health check endpoints for system monitoring
